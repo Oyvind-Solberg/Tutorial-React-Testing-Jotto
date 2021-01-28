@@ -19,8 +19,15 @@ const Input = (props) => {
 				<button
 					data-test="submit-button"
 					className="btn btn-primary mb-2"
+					onClick={(event) => {
+						event.preventDefault();
+						// TODO: Update guessedWords context
+						// TODO: Check against secretWord and optionaly update sucess context
+						setCurrentGuess('');
+					}}
+				>
 					Submit
-				></button>
+				</button>
 			</form>
 		</div>
 	);
