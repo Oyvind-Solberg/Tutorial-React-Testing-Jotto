@@ -1,6 +1,11 @@
 import React from 'react';
 
 import hookActions from './actions/hookActions';
+
+import Input from './Input';
+import GuessedWords from './GuessedWords';
+import Congrats from './Congrats';
+
 import './App.css';
 
 /**
@@ -20,9 +25,6 @@ function reducer(state, action) {
 	}
 }
 
-import GuessedWords from './GuessedWords';
-import Congrats from './Congrats';
-
 function App() {
 	const [state, dispatch] = React.useReducer(reducer, {
 		secretWord: null,
@@ -35,8 +37,20 @@ function App() {
 		hookActions.getSecretWord(setSecretWord);
 	}, []);
 
+	if (!state.secretWord) {
+		return (
+			<div className="container" data-test="spinner">
+				<div className="spinner-border" role="status">
+					<span className="visually-hidden">Loading...</span>
+				</div>
+				<p>Loading secret word</p>
+			</div>
+		);
+	}
+
 	return (
 		<div data-test="component-app" className="container">
+			<Input secretWord={state.secretWord} />
 			{/* <h1>Jotto</h1>
 			<Congrats success={true} />
 			<GuessedWords
